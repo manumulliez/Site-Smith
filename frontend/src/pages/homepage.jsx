@@ -8,7 +8,7 @@ function HomePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
+    fetch('${process.env.REACT_APP_BACKEND_URL}/siteContent')
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement du contenu');
         return res.json();
