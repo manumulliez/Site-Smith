@@ -15,7 +15,7 @@ function GestionContenu() {
   const adminNiveau = 1; 
 
   useEffect(() => {
-    fetch('http://localhost:3000/site-content')
+    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
       .then(res => {
         if (!res.ok) throw new Error('Erreur chargement contenu site');
         return res.json();
@@ -51,7 +51,7 @@ function GestionContenu() {
       adminNiveau // important pour la vérification côté backend
     };
 
-    fetch('http://localhost:3000/admin/site-content', {
+    fetch('${process.env.REACT_APP_BACKEND_URL}/admin/site-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

@@ -17,7 +17,7 @@ function AdminPage() {
   }, [navigate]);
 
   const chargerPublications = () => {
-    fetch('http://localhost:3000/publications')
+    fetch('${process.env.REACT_APP_BACKEND_URL}/publications')
       .then(res => res.json())
       .then(data => setPublications(data.reverse()))
       .catch(() => setError('Erreur de chargement des publications'));
@@ -27,7 +27,7 @@ function AdminPage() {
     if (!window.confirm("Voulez-vous vraiment supprimer cette publication ?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/admin/publications/${id}`, {
+      const res = await fetch('${process.env.REACT_APP_BACKEND_URL}/admin/publications/${id}', {
         method: 'DELETE'
       });
 

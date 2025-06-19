@@ -33,7 +33,7 @@ function AjouterPublicationPage() {
     formData.append('auteur', auteur);
 
     try {
-      const res = await fetch('http://localhost:3000/admin/publications', {
+      const res = await fetch('${process.env.REACT_APP_BACKEND_URL}/admin/publications', {
         method: 'POST',
         body: formData
       });
