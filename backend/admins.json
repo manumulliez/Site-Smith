@@ -1,0 +1,14 @@
+[
+  {
+    "nom": "Gestionnaire principal",
+    "username": "admin",
+    "password": "123",
+    "niveau": 1
+  },
+  {
+    "nom": "MANU2",
+    "username": "MANU2",
+    "password": "123",
+    "niveau": 2
+  }
+]

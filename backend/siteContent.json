@@ -1,0 +1,12 @@
+{
+  "nomAssociation": "Association",
+  "pageAccueil": {
+    "titre": "Bienvenue sur notre site",
+    "texteAccueil": "Bienvenue sur notre site.\nVoici notre mission : aider les enfants.\nMerci de votre soutien !\n"
+  },
+  "pageContact": {
+    "tel": "623311334",
+    "mail": "manu.mulliez@gmail.com",
+    "adresse": "Dschang TEST"
+  }
+}
