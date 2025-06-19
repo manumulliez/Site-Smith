@@ -17,7 +17,6 @@ function ModifierPublication() {
     const isAdmin = localStorage.getItem('isAdmin');
     if (isAdmin !== "true") {
       window.location.href = "/login";
-    
     }
     
     fetch('${process.env.REACT_APP_BACKEND_URL}/publications')
@@ -42,7 +41,7 @@ function ModifierPublication() {
     if (image) formData.append('image', image);
 
     try {
-      const res = await fetch(`http://localhost:3000/admin/publications/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/publications/${id}`, {
         method: 'PUT',
         body: formData
       });
