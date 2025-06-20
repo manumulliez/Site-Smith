@@ -12,11 +12,11 @@ function Header() {
         return res.json();
       })
       .then(data => {
-        setNomAssociation(data.nomAssociation || 'Association');
+        setNomAssociation(data.nomAssociation || 'test');
       })
       .catch(err => {
         console.error(err);
-        setNomAssociation('Association');
+        setNomAssociation('test');
       });
   }, []);
 
