@@ -6,7 +6,7 @@ function HeaderAdmin() {
   const [nomAssociation, setNomAssociation] = useState('Association');
 
   useEffect(() => {
-    fetch('http://localhost:3000/site-content')
+    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
       .then(res => res.json())
       .then(data => setNomAssociation(data.nomAssociation || 'Association'))
       .catch(() => setNomAssociation('Association'));
