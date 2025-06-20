@@ -68,42 +68,46 @@ function GestionContenu() {
   
 
   return (
-    <div className="container">
+    <div>
       <HeaderAdmin />
-      <h2>Gestion du contenu du site</h2>
-      {error && <p style={{ color: 'red' }}>Erreur : {error}</p>}
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <label>Nom de l’association :</label>
-        <input type="text" value={nomAssociation} onChange={e => setNomAssociation(e.target.value)} required />
-
-        <h3>Page d’accueil</h3>
-        <label>Titre :</label>
-        <input type="text" value={titreAccueil} onChange={e => setTitreAccueil(e.target.value)} required />
-
-        <label>Texte d’accueil :</label>
-        <textarea 
-          value={texteAccueil} 
-          onChange={e => setTexteAccueil(e.target.value)}
-          rows="8"
-          style={{ width: '100%' }}
-          required
-        />
+    
+      <div className="container">
         
+        <h2>Gestion du contenu du site</h2>
+        {error && <p style={{ color: 'red' }}>Erreur : {error}</p>}
+        {message && <p style={{ color: 'green' }}>{message}</p>}
 
-        <h3>Page Contact</h3>
-        <label>Téléphone :</label>
-        <input type="text" value={tel} onChange={e => setTel(e.target.value)} required />
+        <form onSubmit={handleSubmit}>
+          <label>Nom de l’association :</label>
+          <input type="text" value={nomAssociation} onChange={e => setNomAssociation(e.target.value)} required />
 
-        <label>Email :</label>
-        <input type="email" value={mail} onChange={e => setMail(e.target.value)} required />
+          <h3>Page d’accueil</h3>
+          <label>Titre :</label>
+          <input type="text" value={titreAccueil} onChange={e => setTitreAccueil(e.target.value)} required />
 
-        <label>Adresse :</label>
-        <input type="text" value={adresse} onChange={e => setAdresse(e.target.value)} required />
+          <label>Texte d’accueil :</label>
+          <textarea 
+            value={texteAccueil} 
+            onChange={e => setTexteAccueil(e.target.value)}
+            rows="8"
+            style={{ width: '100%' }}
+            required
+          />
+          
 
-        <button type="submit" style={{ marginTop: '20px' }}>Sauvegarder les modifications</button>
-      </form>
+          <h3>Page Contact</h3>
+          <label>Téléphone :</label>
+          <input type="text" value={tel} onChange={e => setTel(e.target.value)} required />
+
+          <label>Email :</label>
+          <input type="email" value={mail} onChange={e => setMail(e.target.value)} required />
+
+          <label>Adresse :</label>
+          <input type="text" value={adresse} onChange={e => setAdresse(e.target.value)} required />
+
+          <button type="submit" style={{ marginTop: '20px' }}>Sauvegarder les modifications</button>
+        </form>
+      </div>
     </div>
   );
 }
