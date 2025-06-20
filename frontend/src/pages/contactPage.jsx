@@ -9,7 +9,7 @@ function ContactPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/site-content`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement des contacts');
         return res.json();

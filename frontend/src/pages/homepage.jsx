@@ -8,7 +8,7 @@ function HomePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('https://site-association-backend.onrender.com/siteContent')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/site-content`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement du contenu');
         return res.json();
