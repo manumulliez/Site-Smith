@@ -5,7 +5,7 @@ function Publications() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/publications')
+    fetch('https://site-association-backend.onrender.com/publications')
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement');
         return res.json();
