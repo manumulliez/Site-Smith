@@ -5,7 +5,7 @@ function Publications() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://site-association-backend.onrender.com/publications')
+    fetch(`${process.env.REACT_APP_API_URL}/publications`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement');
         return res.json();
