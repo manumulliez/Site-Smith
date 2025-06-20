@@ -30,7 +30,7 @@ function HeaderAdmin() {
 
         <button onClick={() => {
           localStorage.clear();
-          window.location.href = "";
+          window.location.href = "/login";
         }}>
           Déconnexion
         </button>
