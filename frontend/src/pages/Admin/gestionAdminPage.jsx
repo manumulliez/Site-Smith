@@ -24,7 +24,7 @@ function GestionAdmins() {
       window.location.href = "/login";
       console.log('retour');
     }
-    fetch('${process.env.REACT_APP_BACKEND_URL}/admins')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/admins`)
       .then(res => {
         if (!res.ok) throw new Error("Erreur lors du chargement des administrateurs");
         return res.json();
@@ -37,7 +37,7 @@ function GestionAdmins() {
     if (!window.confirm("Voulez-vous vraiment supprimer cet administrateur ?")) return;
 
     try {
-      const res = await fetch('${process.env.REACT_APP_BACKEND_URL}/admins/${username}', {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admins/${username}`, {
         method: 'DELETE',
       });
 

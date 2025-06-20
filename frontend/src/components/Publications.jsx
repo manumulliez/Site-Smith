@@ -36,7 +36,7 @@ function Publications() {
             </div>
             {pub.image && (
               <img
-                src={`http://localhost:3000${pub.image}`}
+                src={`${process.env.REACT_APP_BACKEND_URL}${pub.image}`}
                 alt={pub.titre}
                 style={{ maxWidth: '300px', display: 'block', marginBottom: '10px' }}
               />

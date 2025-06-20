@@ -15,7 +15,7 @@ function GestionContenu() {
   const adminNiveau = 1; 
 
   useEffect(() => {
-    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/site-content`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur chargement contenu site');
         return res.json();

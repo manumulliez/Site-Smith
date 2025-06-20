@@ -69,7 +69,7 @@ function AdminPage() {
                 </p>
               </div>
               {pub.image && (
-                <img src={`${process.env.REACT_APP_BACKEND_URL}/${pub.image}`} alt={pub.titre} style={{ maxWidth: '200px' }} />
+                <img src={`${process.env.REACT_APP_BACKEND_URL}${pub.image}`} alt={pub.titre} style={{ maxWidth: '200px' }} />
               )}
               
               <p style={{ whiteSpace: 'pre-wrap' }}>{pub.contenu}</p>

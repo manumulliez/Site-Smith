@@ -19,7 +19,7 @@ function ModifierPublication() {
       window.location.href = "/login";
     }
     
-    fetch('${process.env.REACT_APP_BACKEND_URL}/publications')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/publications`)
       .then(res => res.json())
       .then(data => {
         const pub = data.find(p => p.id.toString() === id);
@@ -27,7 +27,7 @@ function ModifierPublication() {
           setTitre(pub.titre);
           setContenu(pub.contenu);
           setAuteur(pub.auteur);
-          setPreview('${process.env.REACT_APP_BACKEND_URL}/${pub.image}');
+          setPreview(`${process.env.REACT_APP_BACKEND_URL}${pub.image}`);
         }
       });
   }, [id]);
