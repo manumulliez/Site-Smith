@@ -51,7 +51,7 @@ function GestionContenu() {
       adminNiveau // important pour la vérification côté backend
     };
 
-    fetch('${process.env.REACT_APP_BACKEND_URL}/admin/site-content', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/site-content`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

@@ -61,7 +61,7 @@ function GestionAdmins() {
     e.preventDefault();
 
     try {
-      const res = await fetch('${process.env.REACT_APP_BACKEND_URL}/admins', {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admins`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

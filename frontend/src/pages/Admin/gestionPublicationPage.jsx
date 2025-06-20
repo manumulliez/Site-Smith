@@ -17,7 +17,7 @@ function AdminPage() {
   }, [navigate]);
 
   const chargerPublications = () => {
-    fetch('${process.env.REACT_APP_BACKEND_URL}/publications')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/publications`)
       .then(res => res.json())
       .then(data => setPublications(data.reverse()))
       .catch(() => setError('Erreur de chargement des publications'));
@@ -27,7 +27,7 @@ function AdminPage() {
     if (!window.confirm("Voulez-vous vraiment supprimer cette publication ?")) return;
 
     try {
-      const res = await fetch('${process.env.REACT_APP_BACKEND_URL}/admin/publications/${id}', {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/admin/publications/${id}`, {
         method: 'DELETE'
       });
 
@@ -69,7 +69,7 @@ function AdminPage() {
                 </p>
               </div>
               {pub.image && (
-                <img src={`http://localhost:3000${pub.image}`} alt={pub.titre} style={{ maxWidth: '200px' }} />
+                <img src={`${process.env.REACT_APP_BACKEND_URL}/${pub.image}`} alt={pub.titre} style={{ maxWidth: '200px' }} />
               )}
               
               <p style={{ whiteSpace: 'pre-wrap' }}>{pub.contenu}</p>
