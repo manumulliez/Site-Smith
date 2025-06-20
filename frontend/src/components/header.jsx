@@ -6,17 +6,17 @@ function Header() {
   const [nomAssociation, setNomAssociation] = useState('Association');
 
   useEffect(() => {
-    fetch('${process.env.REACT_APP_BACKEND_URL}/site-content')
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/siteContent`)
       .then(res => {
         if (!res.ok) throw new Error('Erreur lors du chargement du nom');
         return res.json();
       })
       .then(data => {
-        setNomAssociation(data.nomAssociation || 'test');
+        setNomAssociation(data.nomAssociation || 'test 2');
       })
       .catch(err => {
         console.error(err);
-        setNomAssociation('test');
+        setNomAssociation('test 1');
       });
   }, []);
 
