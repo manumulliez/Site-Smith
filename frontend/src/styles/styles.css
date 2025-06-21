@@ -2,7 +2,9 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f4f4f4;
+  background: #a8a3a3;
+   background-image: url('background.jpg');
+   background-size: cover;
 }
 
 header {
@@ -28,6 +30,7 @@ nav a:hover {
   background: white;
   padding: 20px;
   border-radius: 5px;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 
@@ -105,6 +108,16 @@ button {
   padding: 10px;
   font-size: 1rem;
 }
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 10px;
+}
 
 @media screen and (max-width: 600px) {
   header {
@@ -147,4 +160,5 @@ button {
   .zone-texte {
     height: 150px;
   }
+  
 }

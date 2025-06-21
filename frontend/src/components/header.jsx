@@ -21,8 +21,11 @@ function Header() {
   }, []);
 
   return (
-    <header>
-      <h1>{nomAssociation}</h1>
+    <header >
+      <div className="logo-container">
+        <img src="/logo192.png" alt="Logo Association" className="logo" />
+        <h1>{nomAssociation}</h1>
+      </div>
       <nav>
         <Link to="/">Accueil</Link> |{' '}
         <Link to="/publications">Actualités</Link> |{' '}
