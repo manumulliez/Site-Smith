@@ -48,7 +48,7 @@ function ModifierPublication() {
 
       if (res.ok) {
         setMessage("✅ Publication mise à jour avec succès !");
-        setTimeout(() => navigate('/gestion-publication'), 1500);
+        setTimeout(() => navigate('/gestion-publications'), 1500);
       } else {
         setMessage("❌ Erreur lors de la mise à jour.");
       }

@@ -6,8 +6,14 @@
     "niveau": 1
   },
   {
-    "nom": "MANU2",
-    "username": "MANU2",
+    "nom": "ADMIN",
+    "username": "ADMIN2",
+    "password": "123",
+    "niveau": 1
+  },
+  {
+    "nom": "test",
+    "username": "test2",
     "password": "123",
     "niveau": 2
   }

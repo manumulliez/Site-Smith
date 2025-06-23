@@ -3,6 +3,7 @@ import React from 'react';
 import Publications from '../components/Publications';
 import '../styles/styles.css';
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 function PublicationsPage() {
   return (
@@ -14,6 +15,7 @@ function PublicationsPage() {
       <div className="container">
         <Publications />
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -1,10 +1,11 @@
+// HomePage.jsx
 import React, { useEffect, useState } from 'react';
 import '../styles/styles.css';
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 function HomePage() {
-  const [titre, setTitre] = useState('');
-  const [texteAccueil, setTexteAccueil] = useState('');
+  const [sections, setSections] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -14,8 +15,11 @@ function HomePage() {
         return res.json();
       })
       .then(data => {
-        setTitre(data.pageAccueil?.titre || 'Bienvenue');
-        setTexteAccueil(data.pageAccueil?.texteAccueil || '');
+        if (Array.isArray(data.pageAccueil)) {
+          setSections(data.pageAccueil);
+        } else {
+          setSections([{ titre: data.pageAccueil?.titre || 'Bienvenue', texte: data.pageAccueil?.texte || '',image: data.pageAccueil?.image || '' }]);
+        }
       })
       .catch(err => setError(err.message));
   }, []);
@@ -28,12 +32,23 @@ function HomePage() {
         {error ? (
           <p style={{ color: 'red' }}>Erreur : {error}</p>
         ) : (
-          <>
-            <h2>{titre}</h2>
-            <p style={{ whiteSpace: 'pre-line' }}>{texteAccueil}</p>
-          </>
+          sections.map((section, index) => (
+            <div key={index}>
+              <h3>{section.titre}</h3>
+              
+              <p style={{ whiteSpace: 'pre-line' }}>{section.texte}</p>
+              {section.image && (
+                <img
+                  src={`${process.env.REACT_APP_BACKEND_URL}${section.image}`}
+                  alt={section.titre}
+                  style={{ maxWidth: '800px',maxHeight:'300px', display: 'block', margin: '10px auto'}}
+                />
+              )}
+            </div>
+          ))
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

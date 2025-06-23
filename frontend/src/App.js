@@ -4,6 +4,10 @@ import HomePage from './pages/homepage';
 import ContactPage from './pages/contactPage';
 import LoginPage from './pages/loginPage';
 import PublicationsPage from './pages/publicationpage';
+import DonationPage from './pages/donationPage';
+import MembrePage from './pages/membrePage';
+import ProjetPage from './pages/projetPage';
+import PartenairePage from './pages/partenairePage';
 
 import AdminDashboard from './pages/Admin/adminPage';
 import AjouterPublicationPage from './pages/Admin/AjouterPublicationPage';
@@ -21,6 +25,10 @@ function App() {
         <Route path="/publications" element={<PublicationsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path='/donation' element={<DonationPage/>}/>
+        <Route path='/membres' element={<MembrePage/>}/>
+        <Route path='/projets' element={<ProjetPage/>}/>
+        <Route path='/partenaires' element={<PartenairePage/>}/>
 
 
         <Route path="/admin" element={<AdminDashboard />} />
@@ -30,6 +38,7 @@ function App() {
         <Route path="/gestion-publications" element={  <GestionPublication /> } />
         <Route path="/ajouter-publication" element={<AjouterPublicationPage />} />
         <Route path='/modifier-publication/:id' element={<ModifierPublication/>}/>
+        
       </Routes>
     </Router>
   );

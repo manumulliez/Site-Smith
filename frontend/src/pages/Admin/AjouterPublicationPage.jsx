@@ -6,7 +6,7 @@ import HeaderAdmin from '../../components/headerAdmin';
 function AjouterPublicationPage() {
   const [titre, setTitre] = useState('');
   const [contenu, setContenu] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
   const [auteur, setAuteur] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function AjouterPublicationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!titre || !contenu || !image || !auteur) {
+    if (!titre || !contenu || !auteur) {
       setMessage("❌ Tous les champs sont obligatoires.");
       return;
     }
@@ -90,7 +90,6 @@ function AjouterPublicationPage() {
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
-            required
           />
 
           <button type="submit">Publier</button>

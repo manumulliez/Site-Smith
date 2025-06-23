@@ -120,11 +120,11 @@ app.get("/publications", (req, res) => {
 app.post('/admin/publications', upload.single('image'), (req, res) => {
   const { titre, contenu, auteur } = req.body;
 
-  if (!titre || !contenu || !auteur || !req.file) {
+  if (!titre || !contenu || !auteur ) {
     return res.status(400).json({ message: "Champs manquants ou image non fournie." });
   }
 
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl =  req.file? `/uploads/${req.file.filename}` :null;
 
   const nouvellePublication = {
     id: Date.now(),
@@ -237,28 +237,41 @@ app.get('/site-content', (req, res) => {
 });
 
 // Modifier le contenu du site (admin niveau 1 uniquement)
-app.post('/admin/site-content', (req, res) => {
-  const { nomAssociation, pageAccueil, pageContact, adminNiveau } = req.body;
+app.post("/admin/site-content", upload.array("images"), (req, res) => {
+  let parsedData;
+  try {
+    parsedData = JSON.parse(req.body.data);
+  } catch (err) {
+    return res.status(400).json({ message: "Le champ 'data' est manquant ou mal formaté." });
+  }
 
-  // Vérifier que l'admin est de niveau 1
+  const { nomAssociation, pageAccueil, pageContact, adminNiveau } = parsedData;
+
   if (adminNiveau !== 1) {
     return res.status(403).json({ message: "Accès interdit : niveau admin insuffisant." });
   }
 
-  if (!nomAssociation || !pageAccueil || !pageContact) {
-    return res.status(400).json({ message: "Données incomplètes." });
+  // Traitement des images
+  let newSections = pageAccueil;
+  if (Array.isArray(newSections)) {
+    newSections = newSections.map((section, index) => {
+      if (req.files && req.files[index]) {
+        return { ...section, image: `/uploads/${req.files[index].filename}` };
+      }
+      return section;
+    });
   }
 
   const newContent = {
     nomAssociation,
-    pageAccueil,
+    pageAccueil: newSections,
     pageContact
   };
 
-  ecrireSiteContent(newContent);
-
-  res.json({ message: "Contenu du site mis à jour avec succès." });
+  ecrireJSON(siteContentPath, newContent);
+  res.json({ message: "Contenu mis à jour." });
 });
+
 
 
 

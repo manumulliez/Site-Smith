@@ -1,12 +1,25 @@
 {
-  "nomAssociation": "Association",
-  "pageAccueil": {
-    "titre": "Bienvenue sur notre site",
-    "texteAccueil": "Bienvenue sur notre site.\nVoici notre mission : aider les enfants.\nMerci de votre soutien !\n"
-  },
+  "nomAssociation": "Across Mountains and Valleys, We Protect the Environment.",
+  "pageAccueil": [
+    {
+      "titre": "The Stakes",
+      "texte": "Increasing temperatures and rising sea levels, changing precipitation patterns and more extreme weather are threatening human health and safety, food and water security and socio-economic development in Africa and Cameroon in particular. Climate change represents a major threat to Africa achieving the Sustainable Development Goals. The widespread vulnerability of the African continent to the effects of climate change is also caused by pre-existing challenges, such as poverty, food insecurity, displacement and conflicts which have all contributed in creating hazardous leaving conditions thus leaving millions of people vulnerable and homeless, pushing them to settle in flood, landslide and drought exposed areas. As of 2023, there were over 172 million persons directly affected by droughts, landslides, wild fires and floods. Without urgent action to redress climate change in Africa, the current vulnerability will only worsen, with an estimated additional 40 million people in sub-Saharan Africa pushed into extreme poverty and over 85 million people in the region migrating or being displaced, more than any other region in the world. ",
+      "image": null
+    },
+    {
+      "titre": "Cameroon",
+      "texte": "Despite vast natural resources and a relatively well-educated workforce, Cameroon is still facing a serious setback in meeting up with the pace to attaining the UN sustainable development goals. Despite the fact that Cameroon progressed in developing a climate policy, it still lacks a comprehensive regulatory framework to support its goals. Climate change has let to low agricultural productivity, a weak business environment for the formal and informal private sectors, growing fragility, and weak governance in the public and private sectors due to floods, heat waves and droughts especially in the northern parts of the country.  These constraints have become more restrictive in the context of the deteriorating security situation heightened by growing urbanization, and demographic pressure. There is need for urgent action to curb climate change and its adverse effects. The Cameroon Environmental Champions initiative is therefore a building tool towards a culture of environmental responsibility and activism amongst the young generation. It’s no secret that children and youths are the population that will have to deal with the adverse effects of climate change. This therefore necessitates an empowerment drive that will capacity build them with the necessary knowledge, intervention mechanism and will to fight climate change. ",
+      "image": null
+    },
+    {
+      "titre": "Our Mission",
+      "texte": "In summary, we aim to promote youth-led climate action through partnership with local and international stakeholders in the fight against climate change and to ensure environmental sustainability. We provide a platform through which young climate activist can showcase their talents and skills by actively participating in major projects and programs geared towards achieving our goals.",
+      "image": null
+    }
+  ],
   "pageContact": {
     "tel": "623311334",
     "mail": "manu.mulliez@gmail.com",
-    "adresse": "Dschang TEST"
+    "adresse": "Dschang"
   }
 }

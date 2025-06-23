@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/styles.css'; // adapte le chemin si nécessaire
 import Header from '../components/header';
+import Footer from '../components/footer';
 
 function LoginPage() {
   const [username, setUsername] = useState('');
@@ -69,6 +70,7 @@ function LoginPage() {
 
         {message && <p style={{ marginTop: '10px' }}>{message}</p>}
       </div>
+      <Footer/>
     </div>
   );
 }
