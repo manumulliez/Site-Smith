@@ -27,7 +27,7 @@ function HeaderAdmin() {
 
         <Link to="/gestion-publications">Gestion des publications</Link> |{' '}
         <Link to="/gestion-contenu">Gestion du contenu</Link> |{' '}
-
+        <Link to="/message">Gestion des messages</Link> |{' '}
         <button onClick={() => {
           localStorage.clear();
           window.location.href = "/login";

@@ -21,7 +21,7 @@ function lireJSON(fichier) {
     const data = fs.readFileSync(fichier, 'utf-8');
     return JSON.parse(data);
   } catch (err) {
-    // Si le fichier n'existe pas ou est vide, on retourne un tableau vide
+    console.error("Erreur de lecture JSON :", err.message);
     return [];
   }
 }
@@ -49,10 +49,15 @@ const loadPublications = () => {
   return [];
 };
 
-// Sauvegarder les publications
-const savePublications = (data) => {
-  fs.writeFileSync("publications.json", JSON.stringify(data, null, 2));
+//charger message 
+const loadMessages = () => {
+  if (fs.existsSync("messages.json")) {
+    return JSON.parse(fs.readFileSync("messages.json"));
+  }
+  return [];
 };
+
+
 
 
 /// gestion adminstrateur
@@ -89,6 +94,8 @@ function lireSiteContent() {
 function ecrireSiteContent(data) {
   fs.writeFileSync(siteContentPath, JSON.stringify(data, null, 2));
 }
+
+const messagesPath = path.join(__dirname, 'messages.json');
 
 // === ROUTES ===
 
@@ -141,6 +148,52 @@ app.post('/admin/publications', upload.single('image'), (req, res) => {
 
   res.status(201).json({ message: "Publication ajoutée avec succès." });
 });
+
+
+//message 
+app.post('/contact', (req, res) => {
+  const { nom, mail, contenu } = req.body;
+
+  if (!nom || !contenu || !mail ) {
+    return res.status(400).json({ message: "Champs manquants ou image non fournie." });
+  }
+
+  const nouveauMessage = {
+    id: Date.now(),
+    nom,
+    mail,
+    contenu,
+  };
+  
+  const messages = lireJSON(messagesPath) || [];
+  messages.push(nouveauMessage);
+  ecrireJSON(messagesPath, messages);
+
+  res.status(201).json({ message: "Message Publier avec succès." });
+});
+
+app.get("/contact", (req, res) => {
+  const data = loadMessages();
+  res.json(data);
+});
+
+app.delete('/admin/messages/:id', (req, res) => {
+  let messages = lireJSON(messagesPath);
+
+  const id = req.params.id; 
+  const index = messages.findIndex(pub => String(pub.id) === String(id));
+
+  if (!Array.isArray(messages)) messages = [];
+
+
+  if (index === -1) return res.status(404).json({ message: "Message non trouvé" });
+
+  messages.splice(index, 1);
+  ecrireJSON(messagesPath, messages);
+
+  res.json({ message: "Message supprimé" });
+});
+
 
 // Liste des admins
 app.get('/admins', (req, res) => {
@@ -236,42 +289,59 @@ app.get('/site-content', (req, res) => {
   res.json(content);
 });
 
-// Modifier le contenu du site (admin niveau 1 uniquement)
-app.post("/admin/site-content", upload.array("images"), (req, res) => {
-  let parsedData;
-  try {
-    parsedData = JSON.parse(req.body.data);
-  } catch (err) {
-    return res.status(400).json({ message: "Le champ 'data' est manquant ou mal formaté." });
-  }
-
-  const { nomAssociation, pageAccueil, pageContact, adminNiveau } = parsedData;
+app.post('/admin/site-content', upload.array('images'), (req, res) => {
+  const data = JSON.parse(req.body.data);
+  const {
+    nomAssociation,
+    pageAccueil,
+    pageProjet,
+    pageMembre,
+    pagePartenaire,
+    pageContact,
+    poles,
+    adminNiveau
+  } = data;
 
   if (adminNiveau !== 1) {
-    return res.status(403).json({ message: "Accès interdit : niveau admin insuffisant." });
+    return res.status(403).json({ message: "Accès interdit" });
   }
 
-  // Traitement des images
-  let newSections = pageAccueil;
-  if (Array.isArray(newSections)) {
-    newSections = newSections.map((section, index) => {
-      if (req.files && req.files[index]) {
-        return { ...section, image: `/uploads/${req.files[index].filename}` };
+  const uploadedImages = req.files || [];
+  let imageIndex = 0;
+
+  const injectImages = (array) =>
+    (array || []).map(item => {
+      const newItem = { ...item };
+
+      // Si l'image existe déjà (string commençant par "/uploads/")
+      if (item.image && typeof item.image === 'string' && item.image.startsWith('/uploads/')) {
+        return newItem;
       }
-      return section;
+
+      // Si une nouvelle image a été uploadée
+      if (imageIndex < uploadedImages.length) {
+        newItem.image = `/uploads/${uploadedImages[imageIndex].filename}`;
+        imageIndex++;
+      } else {
+        newItem.image = null;
+      }
+
+      return newItem;
     });
-  }
 
   const newContent = {
     nomAssociation,
-    pageAccueil: newSections,
-    pageContact
+    pageAccueil: injectImages(pageAccueil),
+    pageProjet: injectImages(pageProjet),
+    pageMembre: injectImages(pageMembre),
+    pagePartenaire: injectImages(pagePartenaire),
+    pageContact,
+    poles: poles || []
   };
 
-  ecrireJSON(siteContentPath, newContent);
-  res.json({ message: "Contenu mis à jour." });
+  ecrireSiteContent(newContent);
+  res.json({ message: "Contenu du site mis à jour avec succès." });
 });
-
 
 
 

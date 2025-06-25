@@ -15,6 +15,7 @@ import GestionAdmins from './pages/Admin/gestionAdminPage';
 import GestionPublication from './pages/Admin/gestionPublicationPage';
 import ModifierPublication from './pages/Admin/modifierPublication';
 import GestionContenu from './pages/Admin/gestionContenu';
+import MessagePage from './pages/Admin/MessagePage';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
         <Route path="/gestion-publications" element={  <GestionPublication /> } />
         <Route path="/ajouter-publication" element={<AjouterPublicationPage />} />
         <Route path='/modifier-publication/:id' element={<ModifierPublication/>}/>
+        <Route path='/message' element={<MessagePage/>}/>
         
       </Routes>
     </Router>
