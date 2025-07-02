@@ -30,6 +30,12 @@
       "role": "TEST",
       "pole": "direction",
       "image": "/uploads/1750859934346.jpeg"
+    },
+    {
+      "nom": "GIRBERT",
+      "role": "DIRECTEUR COM",
+      "pole": "COMUNICATION",
+      "image": "/uploads/1750937687532.png"
     }
   ],
   "pagePartenaire": [
@@ -45,6 +51,7 @@
     "adresse": "Dschang"
   },
   "poles": [
-    "direction"
+    "direction",
+    "COMUNICATION"
   ]
 }

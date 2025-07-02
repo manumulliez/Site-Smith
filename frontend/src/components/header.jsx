@@ -12,11 +12,11 @@ function Header() {
         return res.json();
       })
       .then(data => {
-        setNomAssociation(data.nomAssociation || 'test 2');
+        setNomAssociation(data.nomAssociation || 'Cameroon Environmental Champions');
       })
       .catch(err => {
         console.error(err);
-        setNomAssociation('test 1');
+        setNomAssociation('Cameroon Environmental Champions');
       });
   }, []);
 
