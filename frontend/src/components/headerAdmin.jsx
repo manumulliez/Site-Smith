@@ -14,27 +14,30 @@ function HeaderAdmin() {
 
   return (
     <header>
-      <h1>{nomAssociation} – Interface Admin</h1>
-      <h3 style={{ fontWeight: 100 }}>Connecté en tant que {admin.nom}</h3>
-      <nav>
-        <Link to="/admin">Accueil Admin</Link> |{' '}
+      <div style={{textAlign : 'center'}}>
+        <h1>{nomAssociation} – Interface Admin</h1>
+        <h3 style={{ fontWeight: 100 }}>Connecté en tant que {admin.nom}</h3>
+        <nav>
+          <Link to="/admin">Accueil Admin</Link> |{' '}
 
-        {admin.niveau === 1 && (
-          <>
-            <Link to="/gestion-admin">Gestion des Admins</Link> |{' '}
-          </>
-        )}
+          {admin.niveau === 1 && (
+            <>
+              <Link to="/gestion-admin">Gestion des Admins</Link> |{' '}
+            </>
+          )}
 
-        <Link to="/gestion-publications">Gestion des publications</Link> |{' '}
-        <Link to="/gestion-contenu">Gestion du contenu</Link> |{' '}
-        <Link to="/message">Gestion des messages</Link> |{' '}
-        <button onClick={() => {
-          localStorage.clear();
-          window.location.href = "/login";
-        }}>
-          Déconnexion
-        </button>
-      </nav>
+          <Link to="/gestion-publications">Gestion des publications</Link> |{' '}
+          <Link to="/gestion-contenu">Gestion du contenu</Link> |{' '}
+          <Link to="/message">Gestion des messages</Link> |{' '}
+          <button onClick={() => {
+            localStorage.clear();
+            window.location.href = "/login";
+          }}>
+            Déconnexion
+          </button>
+        </nav>
+      </div>
+      
     </header>
   );
 }

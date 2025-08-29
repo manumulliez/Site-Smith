@@ -21,21 +21,23 @@ function Header() {
   }, []);
 
   return (
-    <header >
+    <header>
       <div className="logo-container">
-        <img src="/logo192.jpeg" alt="Logo Association" className="logo" />
-        <h1>{nomAssociation}</h1>
+        <img src="/image.png" alt="Logo Association" className="logo" />
       </div>
-      <nav>
-        <Link to="/">Accueil</Link> |{' '}
-        <Link to="/publications">Actualités</Link> |{' '}
-        <Link to="/projets">Nos Projets</Link>|{' '}
-        <Link to="/donation">Donation</Link>|{' '}
-        <Link to="/membres">Membres</Link>|{' '}
-        <Link to="/partenaires">Nos Partenaires</Link>|{' '}
-        <Link to="/contact">Contacts</Link>|{' '}
-        <Link to="/login">Espace Admin</Link> 
-      </nav>
+      <div className="right-container">
+        <h1>{nomAssociation}</h1>
+        <nav>
+          <Link to="/">Accueil</Link> |{' '}
+          <Link to="/publications">Actualités</Link> |{' '}
+          <Link to="/projets">Nos Projets</Link> |{' '}
+          <Link to="/donation">Donation</Link> |{' '}
+          <Link to="/membres">Membres</Link> |{' '}
+          <Link to="/partenaires">Nos Partenaires</Link> |{' '}
+          <Link to="/contact">Contacts</Link> |{' '}
+          <Link to="/login">Espace Admin</Link>
+        </nav>
+      </div>
     </header>
   );
 }

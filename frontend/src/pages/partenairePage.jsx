@@ -30,24 +30,31 @@ function PartenairePage() {
 
       <div className="container">
         <h1>Nos Partenaires</h1>
-        {error ? (
-          <p style={{ color: 'red' }}>Erreur : {error}</p>
-        ) : (
-          sections.map((section, index) => (
-            <div key={index}>
-              <h3>{section.titre}</h3>    
-              
-              <p style={{ whiteSpace: 'pre-line' }}>{section.texte}</p>
-              {section.image && (
-                <img
-                  src={`${process.env.REACT_APP_BACKEND_URL}${section.image}`}
-                  alt={section.titre}
-                  style={{ maxWidth: '800px',maxHeight:'300px', display: 'block', margin: '10px auto'}}
-                />
-              )}
-            </div>
-          ))
-        )}
+        <div style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
+          {error ? (
+            <p style={{ color: 'red' }}>Erreur : {error}</p>
+            ) : (
+            sections.map((section, index) => (
+              <div key={index} style={{textAlign : 'center'}}>
+                {section.image && (
+                  <img
+                    src={`${process.env.REACT_APP_BACKEND_URL}${section.image}`}
+                    alt={section.titre}
+                    style={{
+                          width: '130px',
+                          height: '130px',
+                          objectFit: 'cover',
+                          borderRadius: '50%',
+                          marginBottom: '10px'
+                        }}
+                  />
+                )}
+                <h3>{section.titre}</h3>    
+                <p style={{ whiteSpace: 'pre-line' }}>{section.texte}</p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
       <Footer/>
     </div>

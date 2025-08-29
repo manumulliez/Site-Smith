@@ -11,6 +11,7 @@ function GestionContenu() {
   const [mail, setMail] = useState('');
   const [adresse, setAdresse] = useState('');
   const [message, setMessage] = useState('');
+  const [banderole, setBanderole] =  useState({ imageFile: null, imagePreview: null });;
   const [error, setError] = useState('');
 
   const [pageProjet, setProjet] = useState([
@@ -47,7 +48,8 @@ function GestionContenu() {
         setMembre(formatArray(data.pageMembre, { nom: '', role: '', pole: '', imageFile: null, imagePreview: null }));
         setPartenaire(formatArray(data.pagePartenaire, { titre: '', texte: '', imageFile: null, imagePreview: null }));
         
-        setPoles(data.poles || [""])
+        setBanderole({ imageFile: null,imagePreview: data.banderole || null });
+        setPoles(data.poles || [""]);
         setTel(data.pageContact?.tel || '');
         setMail(data.pageContact?.mail || '');
         setAdresse(data.pageContact?.adresse || '');
@@ -108,28 +110,27 @@ function GestionContenu() {
   const allImages = [];
 
   const processSection = (array) =>
-    array.map(item => {
-      const { imageFile, imagePreview, ...rest } = item;
-      
-      // Image à uploader (nouvelle)
-      if (imageFile) {
-        
-        allImages.push(imageFile);
-        console.log(allImages);
-        return { ...rest }; // on ne met ni image ni preview
-      }
+  array.map(item => {
+    const { imageFile, imagePreview, ...rest } = item;
 
-      // Image déjà existante
-      if (imagePreview && typeof imagePreview === 'string' && imagePreview.startsWith('/uploads/')) {
-        return { ...rest, image: imagePreview };
-      }
+    // Nouvelle image à uploader
+    if (imageFile) {
+      allImages.push(imageFile);
+      return { ...rest, image: "newImage" }; // 👈 on marque comme "nouvelle image"
+    }
 
-      // Image supprimée
-      return { ...rest, image: null };
-    });
+    // Image déjà existante
+    if (imagePreview && typeof imagePreview === 'string' && imagePreview.startsWith('/uploads/')) {
+      return { ...rest, image: imagePreview };
+    }
+
+    // Image supprimée
+    return { ...rest, image: null };
+  });
 
   const data = {
     nomAssociation,
+    banderole :  banderole.imageFile? "newImage" : (banderole.imagePreview && banderole.imagePreview.startsWith('/uploads/') ? banderole.imagePreview : null),
     pageAccueil: processSection(sections),
     pageProjet: processSection(pageProjet),
     pageMembre: processSection(pageMembre),
@@ -139,6 +140,10 @@ function GestionContenu() {
     adminNiveau
   };
 
+  // 🖼️ Banderole dans un champ séparé
+  if (banderole.imageFile) {
+    formData.append("banderole", banderole.imageFile);
+  }
   allImages.forEach(img => formData.append("images", img));
   formData.append("data", JSON.stringify(data));
   
@@ -215,6 +220,30 @@ function GestionContenu() {
               <label>Nom de l’association :</label>
               <input type="text" value={nomAssociation} onChange={e => setNomAssociation(e.target.value)} required />
               <h3>Page d’accueil</h3>
+              <h4>Banderole (900px par 150px)</h4>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={e => setBanderole({
+                  imageFile: e.target.files[0],
+                  imagePreview: URL.createObjectURL(e.target.files[0])
+                })}
+              />
+              {banderole.imagePreview && (
+                <div>
+                  <img 
+                    src={banderole.imageFile 
+                      ? banderole.imagePreview 
+                      : `${process.env.REACT_APP_BACKEND_URL}${banderole.imagePreview}`} 
+                    alt="Banderole" 
+                    style={{ maxWidth: '100%', marginTop: '10px' }} 
+                  />
+                  <br />
+                  <button type="button" onClick={() => setBanderole({ imageFile: null, imagePreview: null })}>
+                    Supprimer la banderole
+                  </button>
+                </div>
+              )}
               {renderSectionForm("Titre", sections, setSections, { titre: '', texte: '', imageFile: null, imagePreview: null })}
             </>
           )}
@@ -289,13 +318,6 @@ function GestionContenu() {
             <>
               <h3>Projets</h3>
               {renderSectionForm("Titre projet", pageProjet, setProjet, { titre: '', texte: '', imageFile: null, imagePreview: null })}
-            </>
-          )}
-
-          {ongletActif === "partenaires" && (
-            <>
-              <h3>Partenaires</h3>
-              {renderSectionForm("Nom partenaire", pagePartenaire, setPartenaire, { titre: '', texte: '', imageFile: null, imagePreview: null })}
             </>
           )}
 

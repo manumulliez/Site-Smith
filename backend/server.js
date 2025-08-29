@@ -6,6 +6,8 @@ const app = express();
 app.use(cors());
 
 
+
+
 app.use(express.json());
 app.use(cors()); // autoriser les appels depuis le frontend
 const multer = require('multer');
@@ -31,6 +33,35 @@ function ecrireJSON(fichier, data) {
 }
 // Servir les images uploadées dans /uploads
 app.use('/uploads', express.static('uploads'));
+
+// 🔹 Fonction utilitaire : récupérer toutes les images d’un contenu
+function collecterImages(content) {
+  let images = [];
+
+  // 🖼️ Banderole
+  if (content.banderole && typeof content.banderole === "string" && content.banderole.startsWith("/uploads/")) {
+    images.push(content.banderole);
+  }
+
+  // Sous-fonction pour collecter les images dans un tableau
+  const collect = (arr) => {
+    if (Array.isArray(arr)) {
+      arr.forEach(item => {
+        if (item.image && typeof item.image === "string" && item.image.startsWith("/uploads/")) {
+          images.push(item.image);
+        }
+      });
+    }
+  };
+
+  if (content.pageAccueil) collect(content.pageAccueil);
+  if (content.pageProjet) collect(content.pageProjet);
+  if (content.pageMembre) collect(content.pageMembre);
+  if (content.pagePartenaire) collect(content.pagePartenaire);
+
+  return images;
+}
+
 
 // Configuration multer
 const storage = multer.diskStorage({
@@ -289,59 +320,72 @@ app.get('/site-content', (req, res) => {
   res.json(content);
 });
 
-app.post('/admin/site-content', upload.array('images'), (req, res) => {
-  const data = JSON.parse(req.body.data);
-  const {
-    nomAssociation,
-    pageAccueil,
-    pageProjet,
-    pageMembre,
-    pagePartenaire,
-    pageContact,
-    poles,
-    adminNiveau
-  } = data;
 
-  if (adminNiveau !== 1) {
-    return res.status(403).json({ message: "Accès interdit" });
-  }
+app.post('/admin/site-content', upload.fields([
+  { name: 'banderole', maxCount: 1 },
+  { name: 'images', maxCount: 50 }
+]), (req, res) => {
+  try {
+    const ancienContenu = lireSiteContent();
+    const ancienFichiers = collecterImages(ancienContenu);
 
-  const uploadedImages = req.files || [];
-  let imageIndex = 0;
+    let nouveauContenu = JSON.parse(req.body.data);
 
-  const injectImages = (array) =>
-    (array || []).map(item => {
-      const newItem = { ...item };
+    // 🖼️ Banderole (champ séparé)
+    if (req.files.banderole && req.files.banderole.length > 0) {
+      nouveauContenu.banderole = `/uploads/${req.files.banderole[0].filename}`;
+      console.log("Banderole =>", nouveauContenu.banderole);
+    }
 
-      // Si l'image existe déjà (string commençant par "/uploads/")
-      if (item.image && typeof item.image === 'string' && item.image.startsWith('/uploads/')) {
-        return newItem;
+    // 🔄 Autres images (sections)
+    if (req.files.images && req.files.images.length > 0) {
+      let fileIndex = 0;
+
+      const traiterImages = (sections) =>
+        sections.map(section => {
+          if (section.image === "newImage" && req.files.images[fileIndex]) {
+            section.image = `/uploads/${req.files.images[fileIndex].filename}`;
+            fileIndex++;
+          }
+          return section;
+        });
+
+      if (nouveauContenu.pageAccueil) {
+        nouveauContenu.pageAccueil = traiterImages(nouveauContenu.pageAccueil);
       }
-
-      // Si une nouvelle image a été uploadée
-      if (imageIndex < uploadedImages.length) {
-        newItem.image = `/uploads/${uploadedImages[imageIndex].filename}`;
-        imageIndex++;
-      } else {
-        newItem.image = null;
+      if (nouveauContenu.pageProjet) {
+        nouveauContenu.pageProjet = traiterImages(nouveauContenu.pageProjet);
       }
+      if (nouveauContenu.pageMembre) {
+        nouveauContenu.pageMembre = traiterImages(nouveauContenu.pageMembre);
+      }
+      if (nouveauContenu.pagePartenaire) {
+        nouveauContenu.pagePartenaire = traiterImages(nouveauContenu.pagePartenaire);
+      }
+    }
 
-      return newItem;
+    // ✅ Sauvegarde
+    ecrireSiteContent(nouveauContenu);
+
+    // ✅ Nettoyage des anciennes images
+    const nouvellesImages = collecterImages(nouveauContenu);
+    const fichiersASupprimer = ancienFichiers.filter(img => !nouvellesImages.includes(img));
+
+    fichiersASupprimer.forEach(imgPath => {
+      const fullPath = path.join(__dirname, imgPath);
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+        console.log(`🗑️ Image supprimée : ${fullPath}`);
+      }
     });
 
-  const newContent = {
-    nomAssociation,
-    pageAccueil: injectImages(pageAccueil),
-    pageProjet: injectImages(pageProjet),
-    pageMembre: injectImages(pageMembre),
-    pagePartenaire: injectImages(pagePartenaire),
-    pageContact,
-    poles: poles || []
-  };
-
-  ecrireSiteContent(newContent);
-  res.json({ message: "Contenu du site mis à jour avec succès." });
+    res.json({ message: "Contenu du site mis à jour avec succès.", content: nouveauContenu });
+  } catch (err) {
+    console.error("Erreur lors de la mise à jour du site :", err);
+    res.status(500).json({ message: "Erreur serveur lors de la mise à jour du site." });
+  }
 });
+
 
 
 
