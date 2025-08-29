@@ -40,15 +40,15 @@ form textarea {
 form button {
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: #2980b9;
+  background-color: #75a903;
   border: none;
   color: white;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 8px;
 }
 
 form button:hover {
-  background-color: #3498db;
+  background-color: #45a049;
 }
 
 /* header*/
@@ -124,7 +124,13 @@ footer{background-color: #444b3b;
 }
 
 button {
-  margin-bottom: 10px;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #93bc3a;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .publication .texte {
@@ -160,6 +166,29 @@ button {
   object-fit: cover; /* garde un rendu propre */
   border-radius: 6px;
   margin-top: 10px;
+}
+
+/* voir plus */
+.bouton-droit {
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+  display: inline-block;
+}
+
+.bouton-droit:hover {
+  background-color: #45a049;
+}
+
+.bloc-bouton-droit {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
 }
 
 @media screen and (max-width: 600px) {

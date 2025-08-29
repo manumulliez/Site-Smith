@@ -109,7 +109,11 @@ function HomePage() {
               </div>
             ))
           )}
-          <Link to="/publications">Actualités</Link>
+          <div className="bloc-bouton-droit">
+            <Link to="/publications" className="bouton-droit">
+              Voir plus
+            </Link>
+          </div>
         </div>
       </div>
       
