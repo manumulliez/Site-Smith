@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/styles.css';
+import { Link } from 'react-router-dom';
 
 
 function Footer() {
@@ -57,7 +58,7 @@ function Footer() {
                         height: '100px',
                         objectFit: 'cover',
                         borderRadius: '50%',
-                        marginBottom: '10px'
+                        marginBottom: '1px'
                       }}
                     />
                 )}
@@ -65,8 +66,13 @@ function Footer() {
               </div>
             ))
           )}
+          
           </div>
-         
+          <div className="bloc-bouton-droit">
+            <Link to="/partenaires" className="bouton-droit">
+              Voir plus
+            </Link>
+          </div>
         </div>
         <div>
           <h2>Contacts</h2>
@@ -79,6 +85,11 @@ function Footer() {
               <p><strong>Adresse :</strong> {adresse}</p>
             </div>
           )}
+          <div className="bloc-bouton-droit" style={{justifyContent: 'Center'}}>
+            <Link to="/partenaires" className="bouton-droit">
+              Contactez nous !
+            </Link>
+          </div>
         </div>
       </div>
        
